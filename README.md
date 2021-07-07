@@ -19,3 +19,12 @@ cd client_end
 open index.html
 
 ```
+
+## gitignore 不生效解决
+```
+git rm -r --cached .
+git add . 
+git commit -m 'update .gitignore'
+git push
+
+```
