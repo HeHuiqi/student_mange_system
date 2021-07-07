@@ -1,0 +1,20 @@
+{
+    "name": "student_mange_system",
+    "version": "1.0.0",
+    "description": "student manage system",
+    "main": "http_server.js",
+    "scripts": {
+        "dev": "node http_server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "student",
+        "manage"
+    ],
+    "author": "hhq",
+    "license": "MIT",
+    "dependencies": {
+        "formidable": "^1.2.2",
+        "mysql": "^2.18.1"
+    }
+}

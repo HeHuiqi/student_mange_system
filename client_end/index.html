@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>student manage system</title>
+    <link type="text/css" href="./index.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div>
+        <p>
+            <a id="home_page">首页</a>
+        </p>
+        <div>
+            <form id="add_user">
+                <input placeholder="姓名" name="name" /><br/>
+                <input placeholder="年龄" name="age" /><br/>
+                <input placeholder="性别" name="sex" /><br>
+                <input placeholder="地址" name="address" /><br/>
+                <input type="submit" value="录入" />
+            </form>
+        </div>
+        <br/>
+        <div>
+            <form id="delete_user">
+                <input placeholder="userid" name="user_id" /><br/>
+                <input type="submit" value="删除" />
+            </form>
+
+        </div>
+        <br/>
+        <div>
+            <form id="update_user">
+                <input placeholder="userid" name="user_id" /><br/>
+                <input placeholder="姓名" name="name" /><br/>
+                <input type="submit" value="更改" />
+            </form>
+        </div>
+        <br/>
+        <div>
+            <input type="button" value="查询所有用户" id="query_btn"></input>
+            <p id="query_result">查询结果：</p>
+            <div>
+                <table id="resp_result_table">
+                    <tr>
+                        <th>id</th>
+                        <th>姓名</th>
+                        <th>地址</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="./index.js"></script>
+
+</body>
+
+</html>
