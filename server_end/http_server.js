@@ -21,7 +21,6 @@ function dealRouter(req, res) {
     console.log(req.method + ' ' + req.url);
     let url = req.url;
     url = url.split('?')[0]
-    console.log('usl:',url);
     if (url == '/') {
         homePage(req, res);
         return;

@@ -1,6 +1,8 @@
-var server_db = require('../db/server_db');
+let server_db = require('../db/server_db');
+server_db = require('../db/server_dbpool')
+
 //处理form表单数据
-var formidable = require('formidable')
+let formidable = require('formidable')
 
 const responseSuccess = {
     code: 0,
@@ -23,7 +25,7 @@ function defaultError(req, res) {
     res.write(JSON.stringify(rsp));
     res.end();
 }
-
+// 查询参数转obj
 function queryParamsToObj(url) {
     let query = url.split('?');
     let params = {};

@@ -10,7 +10,7 @@ const file = path.resolve(__dirname,env)
 let config = {};
 try{
     config = require(file)
-    console.log('Load config: [%s] %s', env, file);
+    // console.log('Load config: [%s] %s', env, file);
 }catch (err) {
     console.error('Cannot load config: [%s] %s', env, file);
     throw err;
