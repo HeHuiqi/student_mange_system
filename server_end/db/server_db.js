@@ -18,17 +18,22 @@ alter table hq_user modify id int(11) auto_increment;
 var mysql = require('mysql');
 var db = null;
 
+const config = require('../config');
+const mysql_config = config.mysql_config;
+
+// console.log(mysql_config);
+
 function initDB() {
     db = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'h12345678',
-        database: 'hhq'
+        host: mysql_config.host,
+        user: mysql_config.user,
+        password: mysql_config.password,
+        database: mysql_config.database
     });
     //连接数据库
     db.connect((err) => {
         if (err) throw err;
-        // console.log('数据库连接成功。。。');
+        console.log('数据库连接成功。。。');
     });
 }
 
@@ -51,14 +56,14 @@ function insert_data(sql, values, callback) {
     _excute_sql(sql, values, callback);
 }
 
-function update_data(sql, callback) {
+function update_data(sql,values, callback) {
     //更新
-    _excute_sql(sql, [], callback);
+    _excute_sql(sql, values, callback);
 }
 
-function query_data(sql, callback) {
+function query_data(sql,values, callback) {
     //查询
-    _excute_sql(sql, [], callback);
+    _excute_sql(sql, values, callback);
 }
 
 function _excute_sql(sql, values, callback) {
@@ -68,6 +73,7 @@ function _excute_sql(sql, values, callback) {
     }
     console.log('sql: ' + sql);
     db.query(sql, values, (err, results, fields) => {
+        console.log('sql exe err:',err);
         if (err) {
             callback(0, []);
         } else {

@@ -16,31 +16,39 @@
             <a id="home_page">首页</a>
         </p>
         <div>
-            <form id="add_user">
-                <input placeholder="姓名" name="name" /><br/>
-                <input placeholder="年龄" name="age" /><br/>
-                <input placeholder="性别" name="sex" /><br>
-                <input placeholder="地址" name="address" /><br/>
-                <input type="submit" value="录入" />
+            <form id="add_user" onsubmit="return false">
+                <input placeholder="姓名" type="text" name="name" /><br/>
+                <input placeholder="年龄" type="text" name="age" /><br/>
+                <input placeholder="性别" type="text" name="sex" /><br>
+                <input placeholder="地址" type="text" name="address" /><br/>
+                <input type="button" value="录入"></input>
             </form>
         </div>
         <br/>
         <div>
             <form id="delete_user">
-                <input placeholder="userid" name="user_id" /><br/>
-                <input type="submit" value="删除" />
+                <input placeholder="userId" type="text" name="userId" /><br/>
+                <input type="button" value="删除" />
             </form>
 
         </div>
         <br/>
         <div>
             <form id="update_user">
-                <input placeholder="userid" name="user_id" /><br/>
-                <input placeholder="姓名" name="name" /><br/>
-                <input type="submit" value="更改" />
+                <input placeholder="userId" type="text" name="userId" /><br/>
+                <input placeholder="姓名" type="text" name="name" /><br/>
+                <input type="button" value="更改" />
             </form>
         </div>
         <br/>
+        <div>
+            <form id="query_user">
+                <input placeholder="userId" type="text" name="userId" /><br/>
+                <input type="button" value="查询" />
+            </form>
+        </div>
+        <br/>
+
         <div>
             <input type="button" value="查询所有用户" id="query_btn"></input>
             <p id="query_result">查询结果：</p>

@@ -4,8 +4,10 @@
     "description": "student manage system",
     "main": "http_server.js",
     "scripts": {
-        "dev": "node http_server.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "NODE_ENV=dev node http_server.js",
+        "dev": "NODE_ENV=dev node http_server.js",
+        "prod": "NODE_ENV=prod node test.js",
+        "test": "NODE_ENV=dev node test.js"
     },
     "keywords": [
         "student",
