@@ -1,13 +1,13 @@
 const host = 'http://localhost:3000';
 
 function initHomePage() {
-    var link = document.getElementById('home_page');
+    let link = document.getElementById('home_page');
     link.setAttribute('href', host);
 }
 initHomePage();
 
 function addEvents() {
-    var btn = document.getElementById('query_btn');
+    let btn = document.getElementById('query_btn');
     btn.addEventListener('click', () => {
         deleteTableAllTr(() => {
             queryAllUsers();
@@ -24,8 +24,6 @@ function formatFormData(inputs) {
         const formData = input.name + '=' + input.value;
         formatDatas.push(formData);
     }
-    console.log(formatDatas);
-
     return formatDatas.join('&');
 }
 // 转化input标签的值为obj
@@ -35,7 +33,6 @@ function formatFormToJson(inputs) {
         const input = inputs[index];
         formatJson[input.name] = input.value;
     }
-    console.log(formatJson);
     return formatJson;
 }
 
@@ -43,12 +40,10 @@ function addFormEvent() {
     let form = document.getElementById('add_user');
     let btn = form.querySelectorAll('input[type=button]')[0];
     btn.addEventListener('click', () => {
-        console.log('add_user');
         try {
 
             let inputs = form.querySelectorAll('input[type=text]')
             let data = formatFormToJson(inputs);
-            console.log('form1data:',);
             addUser(JSON.stringify(data));
 
         } catch (error) {
@@ -61,11 +56,9 @@ function addFormEvent() {
     let form2 = document.getElementById('delete_user');
     let btn2 = form2.querySelectorAll('input[type=button]')[0];
     btn2.addEventListener('click', () => {
-        console.log('delete_user');
         try {
             let inputs = form2.querySelectorAll('input[type=text]');
             let data = formatFormToJson(inputs);
-            console.log('form2data:', data);
             deleteUser(user);
         } catch (error) {
 
@@ -77,11 +70,9 @@ function addFormEvent() {
     let form3 = document.getElementById('update_user');
     let btn3 = form3.querySelectorAll('input[type=button]')[0];
     btn3.addEventListener('click', () => {
-        console.log('update_user');
         try {
             let inputs = form3.querySelectorAll('input[type=text]');
             let user = formatFormToJson(inputs);
-            console.log('form3data:', user);
             updateUser(user);
 
         } catch (error) {
@@ -92,11 +83,9 @@ function addFormEvent() {
     let form4 = document.getElementById('query_user');
     let btn4 = form4.querySelectorAll('input[type=button]')[0];
     btn4.addEventListener('click', () => {
-        console.log('query_user');
         try {
             let inputs = form4.querySelectorAll('input[type=text]');
             let user = formatFormData(inputs);
-            console.log('form3data:', user);
             queryUser(user);
 
         } catch (error) {
@@ -145,28 +134,33 @@ function deleteTableTr(userId) {
 }
 
 // 插入某一行
-function insertTableRow(userid, name, address) {
-    var tr_class = 'table_user_row';
-    var tr = document.createElement('tr');
+function insertTableRow(user) {
+    let tr_class = 'table_user_row';
+    let tr = document.createElement('tr');
     tr.className = tr_class;
-    tr.setAttribute('lable', 'user_' + userid);
+    tr.setAttribute('lable', 'user_' + user.id);
 
-    var id_td = document.createElement('td');
+    let id_td = document.createElement('td');
     id_td.setAttribute('lable', 'userId')
-    id_td.innerHTML = userid;
+    id_td.innerHTML = user.id;
 
-    var name_td = document.createElement('td');
+    let name_td = document.createElement('td');
     name_td.setAttribute('lable', 'name')
-    name_td.innerHTML = name;
+    name_td.innerHTML = user.name;
 
-    var address_td = document.createElement('td');
+    let age_td = document.createElement('td');
+    age_td.setAttribute('lable', 'age')
+    age_td.innerHTML = user.age;
+
+    let address_td = document.createElement('td');
     address_td.setAttribute('lable', 'address')
-    address_td.innerHTML = address;
+    address_td.innerHTML = user.address;
 
     tr.appendChild(id_td);
     tr.appendChild(name_td);
+    tr.appendChild(age_td);
     tr.appendChild(address_td);
-    var table = document.getElementById('resp_result_table');
+    let table = document.getElementById('resp_result_table');
     table.appendChild(tr);
 }
 
@@ -176,13 +170,15 @@ function updateTableRow(user) {
     let atr = `[lable=user_${user.userId}]`
     const tr = table.querySelector(atr);
     const nameTd = tr.querySelector('[lable=name]');
-    console.log(tr);
     nameTd.innerHTML = user.name;
+    const addressTd = tr.querySelector('[lable=address]');
+    addressTd.innerHTML = user.address;
+
 }
 
 // 基础请求
 function startRequest(method, url, params, callback) {
-    var xmlhttp;
+    let xmlhttp;
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp = new XMLHttpRequest();
@@ -224,7 +220,7 @@ function addUser(params) {
 
 function deleteUser(user) {
     startRequest('POST', `${host}/deleteuser`, JSON.stringify(user), (rsp) => {
-        console.log('deleteUser',rsp);
+        console.log('deleteUser:',rsp);
         try {
             const result = JSON.parse(rsp);
             if (result.code === 0) {
@@ -254,13 +250,14 @@ function updateUser(user) {
 function queryUser(params) {
     startRequest('GET', `${host}/user`, params, (rsp) => {
         document.getElementById("query_result").innerHTML = rsp;
-        console.log('queryUser',rsp);
+        console.log('queryUser:',rsp);
         try {
             const result = JSON.parse(rsp);
             if (result.code === 0) {
                 deleteTableAllTr(() => {
                     result.data.forEach(user => {
-                        insertTableRow(user.id, user.name, user.address);
+                        console.log('user:',user);
+                        insertTableRow(user);
                     });
                 });
 
@@ -280,7 +277,7 @@ function queryAllUsers() {
         const result = JSON.parse(rsp);
         if (result.code === 0) {
             result.data.forEach(user => {
-                insertTableRow(user.id, user.name, user.address);
+                insertTableRow(user);
             });
         }
       } catch (error) {
