@@ -227,7 +227,7 @@ function updateUser(req, res) {
         try {
             const user = JSON.parse(data);
             console.log();
-            _updateUser(res,user)
+            _updateUser(user,res)
         } catch (error) {
             defaultError(req, res);
         }
@@ -243,14 +243,14 @@ function updateUser(req, res) {
     // });
 }
 
-function _updateUser(res, user) {
+function _updateUser(user, res) {
 
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain;charset=utf-8');
     let rsp = responseFail;
 
     if (user.userId == null || user.userId == '') {
-        rsp.message = '更新失败:name:' + user.name;
+        rsp.message = '更新失败:userId:' + user.userId;
         res.end(JSON.stringify(rsp));
         return;
     }
@@ -259,8 +259,13 @@ function _updateUser(res, user) {
         res.end(JSON.stringify(rsp));
         return;
     }
-    const sql = `update hq_user set name = ?  where id =  ?`;
-    server_db.update_data(sql,[user.name,parseInt(user.userId)], (state, result) => {
+    if (user.address == null || user.address == '') {
+        rsp.message = '更新失败:address:' + user.address;
+        res.end(JSON.stringify(rsp));
+        return;
+    }
+    const sql = `update hq_user set name = ? , address = ?  where id =  ?`;
+    server_db.update_data(sql,[user.name,user.address,parseInt(user.userId)], (state, result) => {
         if (state == 1) {
             rsp = responseSuccess;
             rsp.message = '更新用户成功';
